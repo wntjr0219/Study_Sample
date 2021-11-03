@@ -14,7 +14,7 @@ key_event_table = {
 
 
 # Boy States
-class Idlestate:
+class IdleState:
     def enter(boy, event):
         if event == RIGHT_DOWN:
             boy.velocity += 1
@@ -35,11 +35,37 @@ class Idlestate:
 
     def draw(boy):
         if boy.dir ==1:
-            pass
+            boy.image.clip_draw(boy.frame * 100, 300, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 200, 100, 100, boy.x, boy.y)
+
+class RunState:
+    def enter(boy, event):
+        if event == RIGHT_DOWN:
+            boy.velocity += 1
+        elif event == LEFT_DOWN:
+            boy.velocity -= 1
+        elif event == RIGHT_UP:
+            boy.velocity -= 1
+        elif event == LEFT_DOWN:
+            boy.velocity += 1
+        boy.dir == boy.velocity
+
+    def exit(boy, event):
+        pass
+
+    def do(boy):
+        if boy.velocity ==1:
+            boy.image.clip_draw(boy.frame * 100, 100, 100, 100, boy.x, boy.y)
+        else:
+            boy.image.clip_draw(boy.frame * 100, 0, 100, 100, boy.x, boy.y)
 
 
 next_state_table = {
-# fill here
+    IdleState: {RIGHT_UP: RunState, LEFT_UP: RunState,
+                RIGHT_DOWN: RunState, LEFT_DOWN: RunState},
+    RunState: {RIGHT_UP: IdleState, LEFT_UP:IdleState,
+                RIGHT_DOWN: IdleState, LEFT_DOWN: IdleState}
 }
 
 
