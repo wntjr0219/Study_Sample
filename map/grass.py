@@ -8,5 +8,5 @@ class World:
         pass
 
     def draw(self):
-        self.image.draw(1600, 600)
+        self.image.draw(1600, 284)
   
